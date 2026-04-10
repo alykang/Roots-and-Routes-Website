@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roots and Routes</title>
+  <style>
+    @font-face {
+      font-family: 'Outfit';
+      src: url('Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Hairline.woff2') format('woff2');
+      font-weight: 100;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-HairlineItalic.woff2') format('woff2');
+      font-weight: 100;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Light.woff2') format('woff2');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-LightItalic.woff2') format('woff2');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Regular.woff2') format('woff2');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-RegularItalic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Medium.woff2') format('woff2');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-MediumItalic.woff2') format('woff2');
+      font-weight: 500;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Bold.woff2') format('woff2');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-BoldItalic.woff2') format('woff2');
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    body {
+      background-color: #FBFFF8;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #246C36;
+      padding: 1.18vw 5.21vw;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    header img {
+      width: 6.25vw;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      gap: 0.83vw;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1.36vw;
+      padding: 0.56vw 1.11vw;
+      display: flex;
+      align-items: center;
+      gap: 0.42vw;
+      transition: background-color 0.2s;
+    }
+
+
+    .nav-tomato {
+      height: 1.2em;
+      width: auto;
+      display: none;
+    }
+
+    nav a:hover .nav-tomato {
+      display: block;
+    }
+
+    nav a:hover {
+      font-weight: 500;
+    }
+
+    main {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      overflow: visible;
+      padding-left: 7.31vw;
+      z-index: 2;
+    }
+
+    main img {
+      width: 36.2vw;
+    }
+
+    .road-img {
+      position: absolute;
+      left: 0;
+      top: -1.74vw;
+      width: 100vw;
+      display: block;
+      z-index: 0;
+    }
+
+    .hero-text {
+      margin-top: 1.74vw;
+      width: 30.2vw;
+      font-size: 1.55vw;
+      color: #49190F;
+      text-align: left;
+      padding-right: 3vw;
+      text-wrap: balance;
+    }
+
+    .section-food-insecurity {
+      background-color: #f6f4bc;
+      display: block;
+      padding: calc(10vh + 2.08vw) 12vw calc(10vh + 2.08vw) 12vw;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 3;
+    }
+
+    .food-insecurity-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 15vw;
+    }
+
+    .food-insecurity-left {
+      width: 28.51vw;
+      flex-shrink: 0;
+    }
+
+    .food-insecurity-heading {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 2.5vw;
+      color: #49190F;
+      margin: 0 0 2.5vh 0;
+      line-height: 1.3;
+    }
+
+    .food-insecurity-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .food-insecurity-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4vh;
+    }
+
+    .fi-stat-number {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4.5vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .fi-stat-text {
+      font-family: 'Platform', sans-serif;
+      font-weight: 400;
+      font-size: 1.5vw;
+      color: #49190F;
+      margin: 0.5vh 0 0 0;
+    }
+
+    .section-three {
+      background-color: #FBFFF8;
+      position: relative;
+      min-height: auto;
+      display: block;
+      padding: calc(10vh + 2.08vw) 12vw calc(10vh + 2.08vw) 12vw;
+      box-sizing: border-box;
+    }
+
+    .section-three-title {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4vw;
+      color: #49190F;
+      margin: 0 0 5vh 0;
+    }
+
+    .section-three-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      width: 55vw;
+      line-height: 1.6;
+    }
+
+    .section-three-icons {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin-top: 10vh;
+    }
+
+    .section-three-icons img {
+      width: 8vw;
+      height: auto;
+    }
+
+    .section-four {
+      background-color: #F9F5BA;
+      padding: calc(10vh + 2.08vw) 6.26vw calc(12vh + 2.08vw) 12vw;
+      box-sizing: border-box;
+      display: block;
+    }
+
+    .section-four-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      width: 55vw;
+      line-height: 1.6;
+    }
+
+    .pill-buttons {
+      display: flex;
+      gap: 4vw;
+      margin-top: 7.2vh;
+      width: 100vw;
+      margin-left: -12vw;
+      justify-content: center;
+    }
+
+    .pill-btn {
+      background-color: #246C36;
+      color: #FBFFF8;
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 1.41vw;
+      padding: 1.52vh 3.17vw;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      width: 14vw;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="White Roots&amp;Routes Logo.png" alt="Roots and Routes Logo"></a>
+    <nav>
+      <a href="our-mission.html"><img src="Tomato.png" class="nav-tomato" alt="">Our Mission</a>
+      <a href="resources.html"><img src="Tomato.png" class="nav-tomato" alt="">Resources</a>
+      <a href="for-kids.html"><img src="Tomato.png" class="nav-tomato" alt="">For Kids</a>
+    </nav>
+  </header>
+  <main>
+    <img src="Road 1A.png" alt="" style="position: absolute; bottom: 0; left: 0; width: 100vw; height: auto; z-index: 4; display: block;">
+    <div style="position: absolute; bottom: calc(6vh + 16vw); left: 7.31vw; z-index: 5;">
+      <img src="Roots&amp;Routes Logo.png" alt="Roots and Routes" style="width: 36.2vw; display: block;">
+      <p class="hero-text" style="margin: 1.5vw 0 0 0;">Bridging the gap between local farms and schools, turning surplus produce into hands-on learning opportunities.</p>
+    </div>
+  </main>
+  <section class="section-food-insecurity">
+    <div class="food-insecurity-inner">
+      <div class="food-insecurity-left">
+        <p class="food-insecurity-heading">Food insecurity remains a significant issue in the United States.</p>
+        <p class="food-insecurity-body">Millions of individuals and families lack consistent access to nutritious and affordable food. However, America produces enough food to feed everyone, but millions still go hungry because so much food is wasted.</p>
+      </div>
+      <div class="food-insecurity-stats">
+        <div>
+          <p class="fi-stat-number">50%</p>
+          <p class="fi-stat-text">of produce grown in the U.S. is wasted.</p>
+        </div>
+        <div>
+          <p class="fi-stat-number">13.5%</p>
+          <p class="fi-stat-text">of households in the U.S. are food insecure.</p>
+        </div>
+        <div>
+          <p class="fi-stat-number">21%</p>
+          <p class="fi-stat-text">of food waste occurs at the consumer level.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-three">
+    <p class="section-three-title">WHAT IS ROOTS & ROUTES</p>
+    <p class="section-three-body">ROOTS & ROUTES is a program that rescues surplus produce from local farms—fruits and vegetables that would otherwise go to waste—and delivers them to schools to support hands-on food education. By connecting farmers, educators, and students, the program strengthens community food systems while empowering young people to cook with fresh, seasonal ingredients and understand the broader impacts of food waste.<br><br>Through this integrated approach, ROOTS & ROUTES builds healthier school food environments and cultivates a new generation of students who value sustainability, nutrition, and responsible food stewardship.</p>
+    <div class="section-three-icons">
+      <img src="Wheat.png" alt="Wheat">
+      <span style="font-family: 'Platform', sans-serif; font-weight: 400; font-size: 3.12vw; color: #49190F;">→</span>
+      <img src="School.png" alt="School" style="width: 12vw;">
+      <span style="font-family: 'Platform', sans-serif; font-weight: 400; font-size: 3.12vw; color: #49190F;">→</span>
+      <img src="House.png" alt="House" style="width: 12vw;">
+    </div>
+  </section>
+  <section class="section-four">
+    <p class="section-three-title">Want to Help?</p>
+    <p class="section-four-body">ROOTS & ROUTES grows because of community support. Whether you're a farmer with surplus produce, an educator passionate about food literacy, or a neighbor who believes every child deserves access to fresh, local ingredients—there's a place for you here.<br><br>Volunteer your time, donate produce, or support our work financially to help bring hands-on food education to more schools. Together, we can build a healthier, more connected food system—one harvest at a time.</p>
+    <div class="pill-buttons">
+      <button class="pill-btn">VOLUNTEER</button>
+      <button class="pill-btn">DONATE</button>
+      <button class="pill-btn">PARTNER</button>
+    </div>
+  </section>
+</body>
+</html>

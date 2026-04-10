@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Mission – Roots and Routes</title>
+  <style>
+    @font-face {
+      font-family: 'Outfit';
+      src: url('Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Hairline.woff2') format('woff2');
+      font-weight: 100;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Light.woff2') format('woff2');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Regular.woff2') format('woff2');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Medium.woff2') format('woff2');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Bold.woff2') format('woff2');
+      font-weight: 700;
+    }
+
+    body {
+      background-color: #FBFFF8;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #246C36;
+      padding: 1.18vw 5.21vw;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    header img {
+      width: 6.25vw;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      gap: 0.83vw;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1.36vw;
+      padding: 0.56vw 1.11vw;
+      display: flex;
+      align-items: center;
+      gap: 0.42vw;
+      transition: font-weight 0.2s;
+    }
+
+    .nav-tomato {
+      height: 1.2em;
+      width: auto;
+      display: none;
+    }
+
+    nav a:hover .nav-tomato {
+      display: block;
+    }
+
+    nav a:hover {
+      font-weight: 500;
+    }
+
+    .mission-hero {
+      padding: calc(10vh + 2.08vw) 10vw 4vw 10vw;
+      background-color: #FBFFF8;
+    }
+
+    .mission-boxes {
+      padding: 20px 10vw 4vw 10vw;
+      background-color: #FBFFF8;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mission-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .mission-box {
+      padding: 2vw 2.5vw;
+      border-radius: 12px;
+    }
+
+    .mission-box p {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.4vw;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .page-title {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 7.2vw;
+      color: #49190F;
+      margin: 0;
+    }
+
+    .what-we-do-section {
+      background-color: #F9F5BA;
+      padding: calc(10vh + 2.08vw) 12vw;
+      box-sizing: border-box;
+    }
+
+    .what-we-do-title {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4.8vw;
+      color: #49190F;
+      margin: 0 0 10vh 0;
+    }
+
+    .circle-columns {
+      display: flex;
+      width: 100vw;
+      margin-top: 5vh;
+      margin-left: -12vw;
+    }
+
+    .circle-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8vw;
+      width: 50vw;
+      padding-left: 12vw;
+    }
+
+    .circle-column--right {
+      padding-left: 0;
+      padding-right: 12vw;
+    }
+
+    .circle-row {
+      display: flex;
+      align-items: center;
+      gap: 2vw;
+    }
+
+    .circle-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.5vw;
+      color: #49190F;
+      width: 25vw;
+      line-height: 1.6;
+    }
+
+    .circle {
+      width: 8vw;
+      height: 8vw;
+      border-radius: 50%;
+      background-color: #246C36;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Platform', sans-serif;
+      font-weight: 700;
+      font-size: 5vw;
+      color: white;
+    }
+
+    .section-two {
+      background-color: #F9F5BA;
+      position: relative;
+      overflow: hidden;
+      height: calc(280vh - 24.11vw);
+    }
+
+    .section-two .road3-img {
+      height: 100%;
+      width: auto;
+      min-width: 100vw;
+      display: block;
+    }
+
+    .farm-waste-group {
+      position: absolute;
+      left: 12vw;
+      top: 10vh;
+      width: 38vw;
+      z-index: 1;
+    }
+
+    .farm-waste-header {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4vw;
+      color: #49190F;
+      margin: 0 0 1.5vw 0;
+    }
+
+    .farm-waste-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .habits-group {
+      position: absolute;
+      left: 12vw;
+      top: calc(154vh + 7vw);
+      width: 38vw;
+      z-index: 1;
+    }
+
+    .habits-header {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4vw;
+      color: #49190F;
+      margin: 0 0 1.5vw 0;
+    }
+
+    .habits-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .education-group {
+      position: absolute;
+      right: 12vw;
+      top: calc(84vh + 7vw);
+      width: 38vw;
+      z-index: 1;
+    }
+
+    .education-header {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 4vw;
+      color: #49190F;
+      margin: 0 0 1.5vw 0;
+    }
+
+    .education-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.3vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="White Roots&amp;Routes Logo.png" alt="Roots and Routes Logo"></a>
+    <nav>
+      <a href="our-mission.html"><img src="Tomato.png" class="nav-tomato" alt="">Our Mission</a>
+      <a href="resources.html">Resources</a>
+      <a href="work-with-us.html">For Kids</a>
+    </nav>
+  </header>
+  <section class="mission-hero">
+    <p class="page-title">OUR MISSION</p>
+  </section>
+
+  <section class="mission-boxes">
+    <div class="mission-row">
+      <div class="mission-box" style="background-color: #5364ad; flex: 2.5;">
+        <p style="color: #fff;">Food waste in the United States has become a critical issue, with millions of pounds of edible produce discarded each year despite rising environmental, economic, and social costs.</p>
+      </div>
+      <div class="mission-box" style="background-color: #ee3e84; flex: 1.5;">
+        <p style="color: #fff;">In 2023, U.S. farms produced 17.6 million tons of surplus food, and 15.4 million tons of it ultimately went to waste.</p>
+      </div>
+      <div class="mission-box" style="background-color: #f06a23; flex: 1;">
+        <p style="color: #fff;">In meal terms, the waste corresponds to about 28.8 billion meals.</p>
+      </div>
+    </div>
+    <div class="mission-row">
+      <div class="mission-box" style="background-color: #ffcd2e; flex: 1.5;">
+        <p style="color: #49190F;">This growing crisis not only strains natural resources but also widens gaps in community nutrition and access to fresh, healthy foods.</p>
+      </div>
+      <div class="mission-box" style="background-color: #3d9846; flex: 2;">
+        <p style="color: #fff;">The EPA's "From Farm to Kitchen" report estimates that since 1960, U.S. food loss and waste (in supply chain + disposal) has tripled.</p>
+      </div>
+      <div class="mission-box" style="background-color: #f6f4bc; flex: 1.5;">
+        <p style="color: #49190F; font-size: 2.2vw; font-weight: 700;">So how are we solving this?</p>
+      </div>
+    </div>
+  </section>
+  <section class="what-we-do-section">
+    <p class="what-we-do-title">WHAT WE DO</p>
+    <div class="circle-columns">
+      <div class="circle-column">
+        <div class="circle-row">
+          <div class="circle">1</div>
+          <p class="circle-label">Collaborate with a local farm to rescue surplus produce that would otherwise be wasted.</p>
+        </div>
+        <div class="circle-row">
+          <div class="circle">2</div>
+          <p class="circle-label">Partner with a local school to integrate rescued produce into an educational lesson.</p>
+        </div>
+        <div class="circle-row">
+          <div class="circle">3</div>
+          <p class="circle-label">Facilitate a cooking session where students and parents prepare fresh, nutritious meals using the rescued produce.</p>
+        </div>
+      </div>
+      <div class="circle-column circle-column--right">
+        <div class="circle-row">
+          <div class="circle">4</div>
+          <p class="circle-label">Students practice cooking while learning about the impacts of food waste.</p>
+        </div>
+        <div class="circle-row">
+          <div class="circle">5</div>
+          <p class="circle-label">Encourages hands-on learning and quality time between students and their parents.</p>
+        </div>
+        <div class="circle-row">
+          <div class="circle">6</div>
+          <p class="circle-label">Provide students and parents with educational materials, such as children's books and cookbooks, to support ongoing learning and food waste reduction at home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-two">
+    <img src="road 4.png" alt="Road 4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+    <img src="Wheat.png" alt="Wheat" style="position: absolute; right: 15vw; top: 10vh; z-index: 1; width: 12vw;">
+    <div class="farm-waste-group">
+      <p class="farm-waste-header">FARM WASTE</p>
+      <p class="farm-waste-body">Farm food waste occurs long before produce reaches consumers, with millions of pounds of perfectly edible fruits and vegetables left unharvested each year because they don't meet buyer standards or aren't worth the cost of harvesting.<br><br>This early-stage waste represents a major loss of resources—land, water, labor, and energy—and highlights a critical gap in the food system where fresh, nutritious food is routinely lost before it ever has a chance to nourish communities.</p>
+    </div>
+    <img src="School.png" alt="School" style="position: absolute; left: 10vw; top: calc(84vh + 2vw); z-index: 1; width: 21.6vw;">
+    <div class="education-group">
+      <p class="education-header">EDUCATION</p>
+      <p class="education-body">Studies show that early exposure to education about sustainability helps children build lifelong habits that support environmental responsibility and informed decision-making.<br><br>Learning about food systems, waste, and resource use at a young age encourages students to understand the impact of their choices on their communities and the planet.</p>
+    </div>
+    <img src="House.png" alt="House" style="position: absolute; right: 8vw; top: calc(154vh + 7vw); z-index: 1; width: 21.6vw;">
+    <div class="habits-group">
+      <p class="habits-header">HABITS</p>
+      <p class="habits-body">This foundation empowers them to grow into adults who value conservation, support sustainable practices, and contribute to healthier, more resilient systems.<br><br>ROOTS & ROUTES' take-home educational materials extend learning beyond the classroom, giving students and their families simple, practical ways to engage with sustainability together. By bridging school lessons with family routines, these materials help students build sustainable habits early while empowering families to adopt more mindful, waste-reducing practices at home.</p>
+    </div>
+  </section>
+</body>
+</html>

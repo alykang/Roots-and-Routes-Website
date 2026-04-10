@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources – Roots and Routes</title>
+  <style>
+    @font-face {
+      font-family: 'Outfit';
+      src: url('Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Hairline.woff2') format('woff2');
+      font-weight: 100;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Light.woff2') format('woff2');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Regular.woff2') format('woff2');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Medium.woff2') format('woff2');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Bold.woff2') format('woff2');
+      font-weight: 700;
+    }
+
+    body {
+      background-color: #FBFFF8;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #246C36;
+      padding: 1.18vw 5.21vw;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    header img {
+      width: 6.25vw;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      gap: 0.83vw;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1.36vw;
+      padding: 0.56vw 1.11vw;
+      display: flex;
+      align-items: center;
+      gap: 0.42vw;
+      transition: font-weight 0.2s;
+    }
+
+    .nav-tomato {
+      height: 1.2em;
+      width: auto;
+      display: none;
+    }
+
+    nav a:hover .nav-tomato {
+      display: block;
+    }
+
+    nav a:hover {
+      font-weight: 500;
+    }
+
+    .list-link:hover {
+      text-decoration: underline !important;
+    }
+
+    main {
+      box-sizing: border-box;
+      position: relative;
+      padding-bottom: 10vw;
+    }
+
+    .page-title {
+      position: static;
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 6.4vw;
+      color: #49190F;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    #state-input {
+      text-decoration: underline;
+      outline: none;
+      cursor: text;
+      display: inline-block;
+      min-width: 2ch;
+      caret-color: #49190F;
+    }
+
+    #state-input:focus {
+      opacity: 0.7;
+    }
+
+    .no-resources {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.5vw;
+      color: #49190F;
+      line-height: 1.6;
+      margin-top: 4vh;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="White Roots&amp;Routes Logo.png" alt="Roots and Routes Logo"></a>
+    <nav>
+      <a href="our-mission.html"><img src="Tomato.png" class="nav-tomato" alt="">Our Mission</a>
+      <a href="resources.html"><img src="Tomato.png" class="nav-tomato" alt="">Resources</a>
+      <a href="for-kids.html">For Kids</a>
+    </nav>
+  </header>
+  <main>
+    <div style="margin-top: calc(6.4vh + 1.66vw); margin-left: 10vw; display: flex; align-items: flex-start; gap: 4vw; padding-right: 10vw;">
+      <div style="width: 45.14vw;">
+        <p class="page-title">RESOURCES IN<br><span
+          id="state-input"
+          contenteditable="true"
+          spellcheck="false"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();loadState(this.textContent.trim());this.blur();}"
+          onblur="loadState(this.textContent.trim())">ARIZONA</span></p>
+        <p id="state-description" style="font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 1.39vw; color: #49190F; margin: 5vh 0 0 0; line-height: 1.4; width: 100%;">Resources in Arizona that help you and your family reduce food waste, find affordable food options, and access sustainably sourced products.</p>
+      </div>
+      <div id="us-map" style="width: 37.8vw; flex-shrink: 0;"></div>
+    </div>
+    <div id="resources-list" style="margin-top: 6vh; margin-left: 10vw; width: 80vw; display: flex; flex-direction: column;">
+    </div>
+  </main>
+
+  <script>
+    // National categories appended to every state
+    const nationalAppsCategory = {
+      title: 'Apps',
+      items: [
+        { name: 'Too Good To Go', url: 'https://www.toogoodtogo.com/en-us', desc: 'Buy surplus food from restaurants and stores at a discount before it goes to waste.' },
+        { name: 'OLIO', url: 'https://olioapp.com/', desc: 'Share surplus food and household items with neighbors for free.' },
+        { name: 'Food Rescue US', url: 'https://foodrescue.us/', desc: 'Volunteer to rescue surplus food from businesses and deliver it directly to nonprofits in your area.' },
+        { name: 'Replate', url: 'https://www.replate.org/', desc: 'Platform connecting businesses that have excess prepared food with local nonprofits in real time.' },
+        { name: 'Flashfood', url: 'https://www.flashfood.com/', desc: 'Buy near-expiry grocery items from partnering stores at significantly reduced prices.' },
+      ]
+    };
+
+    const nationalLearnCategory = {
+      title: 'Get Involved & Learn More',
+      items: [
+        { name: 'Feeding America', url: 'https://www.feedingamerica.org/', desc: 'The largest hunger-relief organization in the U.S., connecting people to food banks and advocacy opportunities nationwide.' },
+        { name: 'ReFED', url: 'https://refed.org/', desc: 'A nonprofit using data and solutions to reduce food waste across the U.S. food system.' },
+        { name: 'NRDC Food Matters', url: 'https://www.nrdc.org/issues/food-waste', desc: 'Research, reports, and policy resources on reducing food waste from farm to fork.' },
+        { name: 'EPA Sustainable Management of Food', url: 'https://www.epa.gov/sustainable-management-food', desc: 'Federal resources on the food recovery hierarchy, reduction strategies, and available grants.' },
+        { name: 'No Kid Hungry', url: 'https://www.nokidhungry.org/', desc: 'National campaign to end childhood hunger through advocacy, school meal programs, and volunteer opportunities.' },
+      ]
+    };
+
+    // Reusable universal entries
+    const findFoodBank = { name: 'Find Your Local Food Bank', url: 'https://www.feedingamerica.org/find-your-local-foodbank', desc: 'Use Feeding America\'s directory to find a food bank or pantry near you that accepts food donations.' };
+    const shareWaste = { name: 'ShareWaste', url: 'https://sharewaste.com/', desc: 'Connect with neighbors who accept food scraps for composting, worm farming, or chicken feeding near you.' };
+    const earth911 = { name: 'Earth911 Compost Finder', url: 'https://search.earth911.com/', desc: 'Search for composting drop-off sites, recycling centers, and organics programs near your zip code.' };
+    const mutualAidHub = { name: 'Mutual Aid Hub', url: 'https://www.mutualaidhub.org/', desc: 'Find community fridges, food pantries, and mutual aid groups operating in your area.' };
+    const freedge = { name: 'Freedge', url: 'https://freedge.org/', desc: 'International network of community fridges offering free food to anyone who needs it.' };
+    const littleFreePantry = { name: 'Little Free Pantry', url: 'https://www.littlefreepantry.org/', desc: 'Find a little free pantry near you where anyone can take food or leave food for neighbors in need.' };
+
+    const stateData = {
+      'arizona': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Waste Not', url: 'https://www.wastenotaz.org/', desc: 'Rescues fresh, perishable food from businesses and delivers it to nonprofits, rescuing millions of pounds annually.' },
+              { name: 'Borderlands Produce Rescue', url: 'https://borderlandsproducerescue.org/programs/rescue/', desc: 'A nonprofit that rescues surplus fruits and vegetables and redistributes them to communities instead of sending them to landfills.' },
+              { name: 'ASU Produce Rescue', url: 'https://changemaker.asu.edu/content/produce-rescue', desc: 'A program run by Arizona State University that recovers extra produce and distributes it to local communities.' },
+              { name: 'Arizona Food Bank Network', url: 'https://azfoodbanks.org/', desc: 'A statewide organization that works with farms and food companies to redirect surplus food to food banks across Arizona.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Recycled City', url: 'https://recycledcity.com/', desc: 'Collects food scraps from homes and businesses to create compost for local farms and gardens.' },
+              { name: 'Compost Cats', url: 'https://sustainability.arizona.edu/projects/compost-cats', desc: 'A University of Arizona program that composts food waste while providing sustainability education and community drop-off services.' },
+              { name: 'Flagstaff Residential Food Scraps Drop-off', url: 'https://www.flgrethinkwaste.org/rfsd', desc: 'Provides free community drop-off locations where Flagstaff residents can bring food scraps to be composted.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              mutualAidHub,
+              freedge,
+              littleFreePantry,
+            ]
+          }
+        ]
+      },
+      'alabama': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Community Food Bank of Central Alabama', url: 'https://www.csfba.org/', desc: 'Serves the greater Birmingham area by distributing food to hundreds of partner agencies across central Alabama.' },
+              { name: 'Food Bank of North Alabama', url: 'https://www.foodbanknorthal.org/', desc: 'Distributes millions of pounds of food annually to partner agencies across 11 counties in north Alabama.' },
+              { name: 'Feeding the Gulf Coast', url: 'https://www.feedingthegulfcoast.org/', desc: 'Provides food and resources to people facing hunger across south Alabama, Mississippi, and the Florida Panhandle.' },
+              { name: 'Society of St. Andrew', url: 'https://endhunger.org/', desc: 'Gleans crops from farms across the U.S. that would otherwise go to waste and distributes them to food banks and pantries.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'ACES Composting', url: 'https://www.aces.edu/blog/topics/lawn-garden/composting-in-alabama/', desc: 'Alabama Cooperative Extension guides on home and community composting for residents.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'alaska': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Alaska', url: 'https://foodbankofalaska.org/', desc: 'The largest hunger-relief organization in Alaska, distributing millions of pounds of food to communities statewide.' },
+              { name: 'Anchorage Food Bank', url: 'https://www.anchoragefoodbank.org/', desc: 'Provides emergency food assistance and connects Anchorage residents to food resources year-round.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Municipality of Anchorage Composting', url: 'https://www.muni.org/Departments/health/Solid-Waste-Services/Pages/Composting.aspx', desc: 'Anchorage\'s curbside and drop-off composting programs for food scraps and yard waste.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'arkansas': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Arkansas Food Bank', url: 'https://www.arkansasfoodbank.org/', desc: 'Distributes millions of pounds of food annually to partner agencies across 33 counties in Arkansas.' },
+              { name: 'River Valley Regional Food Bank', url: 'https://www.rvrfoodbank.org/', desc: 'Serves families facing hunger across 12 counties in western Arkansas.' },
+              { name: 'Northwest Arkansas Food Bank', url: 'https://nwafoodbank.org/', desc: 'Provides food assistance to neighbors in need across northwest Arkansas.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Arkansas DEQ Organics', url: 'https://www.adeq.state.ar.us/solwaste/', desc: 'State resources on organics diversion, composting programs, and yard waste management in Arkansas.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'california': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'LA Regional Food Bank', url: 'https://www.lafoodbank.org/', desc: 'One of the largest food banks in the country, distributing over 80 million pounds of food annually across LA County.' },
+              { name: 'SF-Marin Food Bank', url: 'https://www.sfmfoodbank.org/', desc: 'Distributes millions of pounds of food every year to households across San Francisco and Marin counties.' },
+              { name: 'Second Harvest of Silicon Valley', url: 'https://www.shfb.org/', desc: 'Provides food to hundreds of thousands of people across Santa Clara and San Mateo counties each year.' },
+              { name: 'Food Forward', url: 'https://foodforward.org/', desc: 'Rescues surplus fresh produce from farmers markets, backyard trees, and grocery stores across Southern California.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'CalRecycle Organics', url: 'https://calrecycle.ca.gov/organicsmaterials/', desc: 'California\'s statewide organics program with resources on SB 1383 food waste requirements and composting facilities.' },
+              { name: 'LA Compost', url: 'https://lacompost.org/', desc: 'Builds community composting hubs across LA where residents can drop off food scraps and pick up finished compost.' },
+              { name: 'StopWaste (Bay Area)', url: 'https://www.stopwaste.org/', desc: 'Alameda County\'s resource hub for composting, food waste reduction, and sustainable living tips.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              { name: 'Community Fridge SF', url: 'https://www.communityfridgesf.com/', desc: 'A network of free community refrigerators across San Francisco stocked with food for anyone in need.' },
+              mutualAidHub,
+              freedge,
+              littleFreePantry,
+            ]
+          }
+        ]
+      },
+      'colorado': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of the Rockies', url: 'https://foodbankrockies.org/', desc: 'Distributes tens of millions of pounds of food annually to families across Colorado and Wyoming.' },
+              { name: 'Care and Share Food Bank', url: 'https://www.careandshare.org/', desc: 'Serves southern Colorado, distributing food to hundreds of partner agencies across 32 counties.' },
+              { name: 'Weld Food Bank', url: 'https://weldfoodbank.org/', desc: 'Provides food and resources to families and individuals facing hunger in Weld County.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Denver Compost', url: 'https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Public-Works/Programs/Compost', desc: 'Denver\'s residential food scraps composting program with drop-off locations and curbside pickup.' },
+              { name: 'Boulder County Composting', url: 'https://bouldercounty.gov/environment/recycling-and-composting/compost/', desc: 'Compost drop-off and pickup programs for Boulder County residents to divert food waste from landfills.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'connecticut': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Connecticut Foodshare', url: 'https://www.ctfoodshare.org/', desc: 'The largest hunger-relief organization in Connecticut, distributing food to hundreds of partner agencies statewide.' },
+              { name: 'Foodshare Hartford', url: 'https://foodshare.org/', desc: 'Distributes millions of pounds of food annually to communities across the Hartford region.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'CT DEEP Organics', url: 'https://portal.ct.gov/DEEP/Waste-Management-and-Disposal/Organics-Management/Organics-Management', desc: 'Connecticut\'s state program for food scrap diversion, composting incentives, and organic waste regulations.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'delaware': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Delaware', url: 'https://www.fbd.org/', desc: 'The only food bank in Delaware, distributing tens of millions of pounds of food to partner agencies statewide.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Delaware Solid Waste Authority', url: 'https://www.dswa.com/', desc: 'Manages composting infrastructure across Delaware including yard waste and food scrap programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'florida': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Feeding South Florida', url: 'https://feedingsouthflorida.org/', desc: 'One of the top food banks in the nation, distributing hundreds of millions of pounds of food across four South Florida counties.' },
+              { name: 'Feeding Tampa Bay', url: 'https://feedingtampabay.org/', desc: 'Distributes food to hundreds of thousands of people across a ten-county region in the Tampa Bay area.' },
+              { name: 'Second Harvest Food Bank of Central Florida', url: 'https://www.feedhopenow.org/', desc: 'Provides food assistance to more than half a million people each year across six counties in Central Florida.' },
+              { name: 'Harvest Drive', url: 'https://harvestdrive.org/', desc: 'A food rescue organization that redirects surplus produce from farms and distributors to communities in need.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Florida DEP Organics', url: 'https://floridadep.gov/waste/waste-reduction/content/organics-recycling', desc: 'Florida\'s organics recycling resources, food waste reduction guides, and composting program directory.' },
+              { name: 'Broward County Composting', url: 'https://www.broward.org/RecyclingAndDisposal/Composting/Pages/default.aspx', desc: 'Free community composting programs and resources for Broward County residents.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'georgia': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Atlanta Community Food Bank', url: 'https://www.acfb.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 29 counties in metro Atlanta.' },
+              { name: 'Golden Harvest Food Bank', url: 'https://goldenharvest.org/', desc: 'Serves the Augusta region, distributing millions of pounds of food to partner agencies across 25 counties.' },
+              { name: 'Second Harvest of South Georgia', url: 'https://www.harvestsga.org/', desc: 'Provides food to families in need across 22 counties in south Georgia.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'City of Atlanta Composting', url: 'https://www.atlantaga.gov/government/departments/public-works/office-of-solid-waste-management', desc: 'Atlanta\'s residential organics and food scrap programs, including drop-off composting sites.' },
+              { name: 'Compost Now', url: 'https://compostnow.org/', desc: 'Weekly food scrap pickup service for homes and businesses in the Atlanta metro area.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'hawaii': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Hawaii Foodbank', url: 'https://www.hawaiifoodbank.org/', desc: 'The largest hunger-relief organization in Hawaii, distributing food to partner agencies on Oahu, Maui, Kauai, and Molokai.' },
+              { name: 'Big Island Food Bank', url: 'https://bigislandfoodbank.org/', desc: 'Provides food assistance to individuals and families across the Big Island of Hawaii.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'City & County of Honolulu Composting', url: 'https://www.honolulu.gov/rep/site/env/env_docs/compost_site_brochure.pdf', desc: 'Honolulu\'s food scrap and yard waste composting programs for residents and businesses.' },
+              { name: 'Hawaii Department of Health', url: 'https://health.hawaii.gov/shwb/solid-and-hazardous-waste-branch/', desc: 'State resources on solid waste reduction, organics diversion, and composting in Hawaii.' },
+              shareWaste,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'idaho': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'The Idaho Foodbank', url: 'https://www.idahofoodbank.org/', desc: 'Idaho\'s only statewide food bank, distributing tens of millions of pounds of food to partner agencies across all 44 counties.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Idaho DEQ Organics', url: 'https://www.deq.idaho.gov/waste-mgmt-remediation/solid-waste/solid-waste-programs/organics/', desc: 'Idaho\'s state resources on food scrap diversion, composting programs, and organics recycling.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'illinois': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Greater Chicago Food Depository', url: 'https://www.gcfd.org/', desc: 'Chicago\'s food bank, distributing hundreds of millions of pounds of food annually to partner agencies across Cook County.' },
+              { name: 'Northern Illinois Food Bank', url: 'https://www.solvehungertoday.org/', desc: 'Provides food to hundreds of thousands of people across 13 counties in the Chicago suburbs and northern Illinois.' },
+              { name: 'Midwest Food Bank', url: 'https://www.midwestfoodbank.org/', desc: 'Distributes food at no charge to nonprofit agencies across Illinois and beyond.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'City of Chicago Composting', url: 'https://www.chicago.gov/city/en/depts/streets/provdrs/san/svcs/composting.html', desc: 'Chicago\'s residential food scrap composting drop-off program at park districts and community sites.' },
+              { name: 'Collective Resource Compost', url: 'https://www.collectiveresource.org/', desc: 'Chicago-based compost pickup and community drop-off service for homes and businesses.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              { name: 'Chicago Community Fridge Network', url: 'https://mutualaidhub.org/', desc: 'Find community fridges and mutual aid food programs across the Chicago area and northern Illinois.' },
+              freedge,
+              littleFreePantry,
+            ]
+          }
+        ]
+      },
+      'indiana': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Gleaners Food Bank of Indiana', url: 'https://www.gleaners.org/', desc: 'One of the largest food banks in the Midwest, serving more than a million people across central Indiana.' },
+              { name: 'Second Harvest Food Bank of East Central Indiana', url: 'https://www.secondharvestfb.org/', desc: 'Distributes food to partner agencies across 16 counties in east central Indiana.' },
+              { name: 'Food Bank of Northern Indiana', url: 'https://www.feedingamerica.org/find-your-local-foodbank', desc: 'Serves families facing hunger across northern Indiana through a network of partner agencies.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Indiana DEM Composting', url: 'https://www.in.gov/idem/cleanindiana/recycling-resources/compostingorganic-materials/', desc: 'Indiana\'s state resources on food scrap composting, organics diversion, and certified composting facilities.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'iowa': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Iowa', url: 'https://www.foodbankiowa.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across central and eastern Iowa.' },
+              { name: 'Northeast Iowa Food Bank', url: 'https://www.neifoodbank.org/', desc: 'Provides food assistance to individuals and families across 16 counties in northeast Iowa.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Iowa DNR Organics', url: 'https://www.iowadnr.gov/Environmental-Protection/Land-Quality/Waste-Planning-Recycling/Food-Waste', desc: 'Iowa\'s state guide on food waste reduction, composting options, and donation resources.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'kansas': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Harvesters – The Community Food Network', url: 'https://www.harvesters.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 26 counties in Kansas and Missouri.' },
+              { name: 'Kansas Food Bank', url: 'https://www.kansasfoodbank.org/', desc: 'Serves central and western Kansas by distributing food to hundreds of partner organizations.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Kansas DEQ Organics', url: 'https://www.kdhe.ks.gov/1298/Composting', desc: 'Kansas resources on composting regulations, food scrap diversion programs, and organics management.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'kentucky': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'God\'s Pantry Food Bank', url: 'https://www.godspantry.org/', desc: 'Serves central and eastern Kentucky, distributing tens of millions of pounds of food to partner agencies annually.' },
+              { name: 'Dare to Care Food Bank', url: 'https://www.daretocare.org/', desc: 'Distributes food to hundreds of partner agencies across 13 counties in the Louisville metro region.' },
+              { name: 'Kentucky Hunger Initiative', url: 'https://www.kyhunger.org/', desc: 'A collaborative network working to end hunger in Kentucky through advocacy and resource connection.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Kentucky DEP Organics', url: 'https://eec.ky.gov/Environmental-Protection/Waste/Pages/organics.aspx', desc: 'Kentucky\'s composting guidance, food scrap regulations, and organics recycling program directory.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'louisiana': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Second Harvest Food Bank of Greater New Orleans', url: 'https://no-hunger.org/', desc: 'The largest food distributor in the Gulf South, serving more than 700 partner agencies across Louisiana and Mississippi.' },
+              { name: 'Food Bank of Northwest Louisiana', url: 'https://www.foodbanknwla.org/', desc: 'Distributes food to partner agencies across 10 parishes in northwest Louisiana.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Louisiana DEQ Organics', url: 'https://deq.louisiana.gov/', desc: 'Louisiana\'s resources on solid waste, organics diversion, and food waste reduction programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'maine': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Good Shepherd Food Bank', url: 'https://www.gsfb.org/', desc: 'Maine\'s largest hunger-relief organization, distributing tens of millions of pounds of food to partner agencies statewide.' },
+              { name: 'Wayside Food Programs', url: 'https://www.waysidefoods.org/', desc: 'Rescues and redistributes surplus food from grocery stores and farms across the greater Portland area.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Maine DEP Composting', url: 'https://www.maine.gov/dep/waste/composting/', desc: 'Maine\'s composting resources including certified facilities, home composting guides, and food scrap drop-off locations.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'maryland': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Maryland Food Bank', url: 'https://mdfoodbank.org/', desc: 'Distributes tens of millions of pounds of food to partner agencies across every county in Maryland.' },
+              { name: 'Capital Area Food Bank', url: 'https://www.capitalareafoodbank.org/', desc: 'Serves the greater Washington D.C. metro area including Montgomery and Prince George\'s counties.' },
+              { name: 'Moveable Feast', url: 'https://www.mfeast.org/', desc: 'Provides nutritious food to people living with HIV/AIDS, cancer, and other life-threatening illnesses in Maryland.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'MDE Organics', url: 'https://mde.maryland.gov/programs/LAND/RecyclingandOperationsprogram/Pages/Organics.aspx', desc: 'Maryland\'s organics recycling programs, food scrap composting resources, and state-certified composting facilities.' },
+              { name: 'Prince George\'s County Composting', url: 'https://www.princegeorgescountymd.gov/1720/Composting', desc: 'Curbside and drop-off composting options for Prince George\'s County residents.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'massachusetts': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Greater Boston Food Bank', url: 'https://www.gbfb.org/', desc: 'The largest hunger-relief organization in New England, distributing tens of millions of pounds of food annually.' },
+              { name: 'Project Bread', url: 'https://www.projectbread.org/', desc: 'Works to end hunger in Massachusetts through food access programs and advocacy.' },
+              { name: 'Worcester County Food Bank', url: 'https://www.wcfb.org/', desc: 'Distributes food to hundreds of partner agencies across Worcester County.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'MassDEP Organics Management', url: 'https://www.mass.gov/guides/organic-material-management', desc: 'Massachusetts\' organics ban programs, food waste reduction resources, and certified composting facility directory.' },
+              { name: 'Black Earth Compost', url: 'https://blackearthcompost.com/', desc: 'Weekly food scrap pickup service for homes and businesses across eastern Massachusetts.' },
+              { name: 'Boston Food Scraps Program', url: 'https://www.boston.gov/departments/environment/composting-boston', desc: 'Boston\'s residential food scrap drop-off and composting programs to divert waste from landfills.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              { name: 'Fridge Boston', url: 'https://www.fridgeboston.com/', desc: 'A network of free community refrigerators across Boston stocked with fresh food for anyone who needs it.' },
+              mutualAidHub,
+              freedge,
+            ]
+          }
+        ]
+      },
+      'michigan': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Forgotten Harvest', url: 'https://forgottenharvest.org/', desc: 'Rescues surplus food from over 900 donors in metro Detroit and redistributes it to emergency food providers.' },
+              { name: 'Gleaners Community Food Bank', url: 'https://www.gcfb.org/', desc: 'Provides food assistance to hundreds of thousands of people annually across five southeast Michigan counties.' },
+              { name: 'Food Bank of Eastern Michigan', url: 'https://www.fbem.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 22 counties in eastern Michigan.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Michigan EGLE Organics', url: 'https://www.michigan.gov/egle/about/organization/materials-management/organics', desc: 'Michigan\'s organic materials management programs, composting resources, and food waste reduction guidance.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'minnesota': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Second Harvest Heartland', url: 'https://www.2harvest.org/', desc: 'One of the largest food banks in the nation, distributing hundreds of millions of pounds of food across Minnesota and western Wisconsin.' },
+              { name: 'Feed My People Food Bank', url: 'https://feedmypeople.org/', desc: 'Serves 20 counties in west-central Wisconsin and Minnesota, distributing food to partner agencies year-round.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Hennepin County Composting', url: 'https://www.hennepin.us/residents/recycling-hazardous-waste/food-waste-composting', desc: 'Hennepin County\'s food waste composting program with drop-off sites and tips for home composting.' },
+              { name: 'Eureka Recycling', url: 'https://www.eurekarecycling.org/', desc: 'Minneapolis nonprofit offering composting education, collection, and community resources for food scrap diversion.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'mississippi': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Mississippi Food Network', url: 'https://www.msfoodnet.org/', desc: 'The largest hunger-relief organization in Mississippi, distributing food to partner agencies across the state.' },
+              { name: 'Feeding the Gulf Coast', url: 'https://www.feedingthegulfcoast.org/', desc: 'Provides food and resources to people facing hunger across south Alabama, Mississippi, and the Florida Panhandle.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'MDEQ Solid Waste', url: 'https://www.mdeq.ms.gov/land/solid-waste/', desc: 'Mississippi\'s solid waste and organics resources, including guidance on composting and food waste reduction.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'missouri': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Harvesters – The Community Food Network', url: 'https://www.harvesters.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 26 counties in Missouri and Kansas.' },
+              { name: 'St. Louis Area Foodbank', url: 'https://www.stlfoodbank.org/', desc: 'Distributes food to hundreds of partner agencies across 26 counties in Missouri and Illinois.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Missouri DNR Organics', url: 'https://dnr.mo.gov/waste-recycling/composting.htm', desc: 'Missouri\'s composting guidance including home composting tips, certified facilities, and organics diversion resources.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'montana': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Montana Food Bank Network', url: 'https://www.montanafoodbank.org/', desc: 'Distributes food to partner agencies across Montana, connecting communities to hunger-relief resources statewide.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Montana DEQ Organics', url: 'https://deq.mt.gov/Land/soildwaste', desc: 'Montana\'s solid waste and composting resources, including guidance on organics diversion programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'nebraska': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Lincoln', url: 'https://www.foodbankoflnk.org/', desc: 'Serves the greater Lincoln area, distributing food to partner agencies across southeastern Nebraska.' },
+              { name: 'Open Harvest Food Bank (Omaha)', url: 'https://www.feedingamerica.org/find-your-local-foodbank', desc: 'Find food banks and pantries in the greater Omaha area and across Nebraska.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Nebraska DEE Organics', url: 'https://dee.ne.gov/NDEQProg.nsf/OnWeb/SolidWaste', desc: 'Nebraska\'s solid waste and organics management resources, including composting facility information.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'nevada': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Three Square Food Bank', url: 'https://www.threesquare.org/', desc: 'Southern Nevada\'s only food bank, distributing tens of millions of pounds of food annually across the Las Vegas area.' },
+              { name: 'Food Bank of Northern Nevada', url: 'https://fbnn.org/', desc: 'Provides food assistance to individuals and families across northern Nevada and the Sierra region.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Nevada DEP Organics', url: 'https://ndep.nv.gov/waste/solid-waste', desc: 'Nevada\'s solid waste resources, composting guidance, and organics diversion programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'new hampshire': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'New Hampshire Food Bank', url: 'https://www.nhfoodbank.org/', desc: 'The only food bank in New Hampshire, distributing tens of millions of pounds of food to partner agencies statewide.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'NH DES Organics', url: 'https://www.des.nh.gov/waste/solid-waste/organic-materials', desc: 'New Hampshire\'s organic materials management programs and composting resources for residents and businesses.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'new jersey': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Community FoodBank of New Jersey', url: 'https://www.cfbnj.org/', desc: 'The largest hunger-fighting organization in New Jersey, distributing food to hundreds of partner agencies statewide.' },
+              { name: 'Fulfill (Monmouth & Ocean Counties)', url: 'https://fulfillnj.org/', desc: 'Serves Monmouth and Ocean counties, distributing food to families and individuals facing food insecurity.' },
+              { name: 'Table to Table', url: 'https://www.tabletotable.org/', desc: 'Rescues fresh, prepared, and perishable food from restaurants, caterers, and farms across northern New Jersey.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'NJDEP Organics', url: 'https://www.nj.gov/dep/dshw/organics/', desc: 'New Jersey\'s organics recycling regulations, food waste reduction resources, and certified composting programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'new mexico': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Roadrunner Food Bank', url: 'https://www.rrfb.org/', desc: 'New Mexico\'s largest food bank, distributing tens of millions of pounds of food to partner agencies statewide.' },
+              { name: 'High Desert Food & Farm Alliance', url: 'https://hdffa.org/', desc: 'Connects northern New Mexico farms, food producers, and communities to reduce food waste and improve food access.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'NMED Organics', url: 'https://www.env.nm.gov/solid-waste/', desc: 'New Mexico\'s solid waste and organics guidance, including composting tips and certified facility information.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'new york': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'City Harvest', url: 'https://www.cityharvest.org/', desc: 'New York City\'s largest food rescue organization, rescuing millions of pounds of excess food annually from across the city.' },
+              { name: 'Food Bank For NYC', url: 'https://www.foodbanknyc.org/', desc: 'Provides food to hundreds of community food programs across New York City\'s five boroughs.' },
+              { name: 'Island Harvest Food Bank', url: 'https://www.islandharvest.org/', desc: 'Long Island\'s leading hunger-relief organization, distributing food to partner agencies across Nassau and Suffolk counties.' },
+              { name: 'Regional Food Bank of Northeastern NY', url: 'https://www.regionalfoodbank.net/', desc: 'Distributes tens of millions of pounds of food to partner agencies across 23 counties in northeastern New York.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'GrowNYC Composting', url: 'https://www.grownyc.org/compost', desc: 'Operates food scrap drop-off sites at farmers markets and community locations across all five NYC boroughs.' },
+              { name: 'NYC Food Scraps Program', url: 'https://www.nyc.gov/site/dsny/residents/food-scraps-and-composting.page', desc: 'NYC\'s curbside composting and drop-off program to divert organic waste from landfills.' },
+              { name: 'LES Ecology Center', url: 'https://lesecologycenter.org/', desc: 'Runs composting programs and food scrap drop-off sites on the Lower East Side of Manhattan.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              { name: 'NYC Community Fridges', url: 'https://nycfridge.com/', desc: 'Interactive map of community refrigerators and pantries across all five boroughs of New York City.' },
+              mutualAidHub,
+              freedge,
+            ]
+          }
+        ]
+      },
+      'north carolina': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Central & Eastern NC', url: 'https://www.foodbankcenc.org/', desc: 'Distributes hundreds of millions of pounds of food annually to partner agencies across 34 counties in NC.' },
+              { name: 'Inter-Faith Food Shuttle', url: 'https://www.foodshuttle.org/', desc: 'Rescues and redistributes surplus food while running urban agriculture and nutrition education programs in the Triangle area.' },
+              { name: 'Second Harvest Food Bank of NWNC', url: 'https://www.secondharvestnwnc.org/', desc: 'Serves 18 counties in northwest North Carolina, distributing millions of pounds of food to partner agencies.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'NC DEQ Organics', url: 'https://www.ncdeq.gov/Home/Divisions/WasteManagement/SolidWaste/FoodWaste', desc: 'North Carolina\'s food waste reduction resources, certified composting facilities, and organics diversion guidance.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'north dakota': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Great Plains Food Bank', url: 'https://www.greatplainsfoodbank.org/', desc: 'The largest hunger-relief organization in North Dakota, distributing food to partner agencies statewide.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'ND DEQ Organics', url: 'https://www.nddeq.gov/solid-waste', desc: 'North Dakota\'s solid waste resources and composting guidance for residents and communities.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'ohio': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Mid-Ohio Food Collective', url: 'https://www.midohiofoodcollective.org/', desc: 'Central Ohio\'s food bank, distributing hundreds of millions of pounds of food annually to partner agencies.' },
+              { name: 'Greater Cleveland Food Bank', url: 'https://www.clevelandfoodbank.org/', desc: 'Distributes food to hundreds of partner agencies across six counties in northeast Ohio.' },
+              { name: 'Freestore Foodbank', url: 'https://freestorefoodbank.org/', desc: 'Serves the greater Cincinnati area, distributing food and household essentials to families in need.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Ohio EPA Organics', url: 'https://epa.ohio.gov/wps/portal/gov/epa/divisions-and-offices/division-of-materials-and-waste-management/organics-management', desc: 'Ohio\'s organics management resources, food waste reduction guidance, and composting facility directory.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'oklahoma': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Regional Food Bank of Oklahoma', url: 'https://www.rfbo.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 53 counties in western Oklahoma.' },
+              { name: 'Community Food Bank of Eastern Oklahoma', url: 'https://www.cfbeo.org/', desc: 'Serves eastern Oklahoma, distributing food to hundreds of partner agencies and community programs.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Oklahoma DEQ Organics', url: 'https://www.deq.ok.gov/land-protection-division/land-protection-home/solid-waste-management/', desc: 'Oklahoma\'s solid waste and composting guidance for residents, businesses, and communities.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'oregon': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Oregon Food Bank', url: 'https://www.oregonfoodbank.org/', desc: 'Oregon\'s largest hunger-relief organization, distributing food to a statewide network of food pantries and meal programs.' },
+              { name: 'Harvest Against Hunger', url: 'https://harvestagainsthunger.org/', desc: 'Coordinates gleaning of surplus crops from farms across the Pacific Northwest for distribution to food banks.' },
+              { name: 'Marion-Polk Food Share', url: 'https://www.marionpolkfoodshare.org/', desc: 'Distributes food to partner agencies across Marion and Polk counties in the Willamette Valley.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Metro Portland Food Scraps', url: 'https://www.oregonmetro.gov/tools-living/garbage-recycling-composting/food-scraps', desc: 'Portland Metro\'s food scrap composting program and drop-off locator for residents across the region.' },
+              { name: 'Oregon DEQ Organics', url: 'https://www.oregon.gov/deq/mm/pages/organics.aspx', desc: 'Oregon\'s organics management programs, composting facilities, and food waste reduction resources.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'pennsylvania': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Philabundance', url: 'https://www.philabundance.org/', desc: 'The Delaware Valley\'s largest hunger-relief organization, distributing tens of millions of pounds of food annually.' },
+              { name: 'Greater Pittsburgh Community Food Bank', url: 'https://www.pittsburghfoodbank.org/', desc: 'Distributes food to hundreds of partner agencies across 11 counties in southwestern Pennsylvania.' },
+              { name: 'Central PA Food Bank', url: 'https://www.centralpafoodbank.org/', desc: 'Serves 27 counties across central Pennsylvania, distributing food to partner agencies and programs.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'PA DEP Organics', url: 'https://www.dep.pa.gov/Business/Land/Waste/SolidWaste/OrganicsMgmt/Pages/default.aspx', desc: 'Pennsylvania\'s organics management resources, composting guidance, and food waste diversion programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'rhode island': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Rhode Island Community Food Bank', url: 'https://www.rifoodbank.org/', desc: 'Rhode Island\'s largest hunger-relief organization, distributing food to partner agencies across the state.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'RI DEM Composting', url: 'https://dem.ri.gov/environmental-protection-bureau/waste-management/recycling/organics', desc: 'Rhode Island\'s organics and composting programs, including residential drop-off and collection resources.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'south carolina': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Harvest Hope Food Bank', url: 'https://www.harvesthope.org/', desc: 'Distributes food to partner agencies across 20 counties in South Carolina.' },
+              { name: 'Lowcountry Food Bank', url: 'https://www.lowcountryfoodbank.org/', desc: 'Serves 10 counties in the South Carolina Lowcountry, distributing food to partner agencies and programs.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'SC DHEC Organics', url: 'https://www.scdhec.gov/environment/your-home-community/recycling-solid-waste', desc: 'South Carolina\'s recycling and organics diversion resources, including composting guidance.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'south dakota': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Feeding South Dakota', url: 'https://www.feedingsouthdakota.org/', desc: 'The only food bank in South Dakota, distributing food to partner agencies statewide through a large network.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'SD DENR Organics', url: 'https://denr.sd.gov/des/sw/solidwaste.aspx', desc: 'South Dakota\'s solid waste resources and composting guidance for residents and communities.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'tennessee': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Second Harvest Food Bank of Middle Tennessee', url: 'https://www.secondharvestmidtn.org/', desc: 'Distributes tens of millions of pounds of food annually to partner agencies across 46 counties in middle Tennessee.' },
+              { name: 'Mid-South Food Bank', url: 'https://www.midsouthfoodbank.org/', desc: 'Serves western Tennessee and northern Mississippi, distributing food to hundreds of partner agencies.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'TDEC Organics', url: 'https://www.tn.gov/environment/program-areas/sw-solid-waste-management.html', desc: 'Tennessee\'s solid waste and organics management resources, including food scrap composting guidance.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'texas': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Houston Food Bank', url: 'https://www.houstonfoodbank.org/', desc: 'The largest food bank in the U.S. by volume distributed, serving over 18 counties in the greater Houston area.' },
+              { name: 'North Texas Food Bank', url: 'https://ntfb.org/', desc: 'Distributes hundreds of millions of pounds of food annually to partner agencies across 13 counties in north Texas.' },
+              { name: 'Central Texas Food Bank', url: 'https://www.centraltexasfoodbank.org/', desc: 'Provides food assistance to families across 21 counties in central Texas, including the greater Austin area.' },
+              { name: 'San Antonio Food Bank', url: 'https://www.safoodbank.org/', desc: 'Distributes food to hundreds of partner agencies across 16 counties in southwest Texas.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Austin Resource Recovery Composting', url: 'https://www.austintexas.gov/department/resource-recovery', desc: 'Austin\'s curbside composting and drop-off program for food scraps and organic waste.' },
+              { name: 'TCEQ Organics', url: 'https://www.tceq.texas.gov/permitting/waste_permits/msw_permits/organics.html', desc: 'Texas Commission on Environmental Quality resources on composting, organics recycling, and food waste programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [
+              { name: 'Austin Community Fridge', url: 'https://www.austincommunityfridge.com/', desc: 'A network of free community refrigerators across Austin stocked by community members for anyone in need.' },
+              mutualAidHub,
+              freedge,
+            ]
+          }
+        ]
+      },
+      'utah': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Utah Food Bank', url: 'https://www.utahfoodbank.org/', desc: 'Utah\'s largest hunger-relief organization, distributing food to partner agencies across all 29 counties statewide.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Utah DEQ Organics', url: 'https://deq.utah.gov/waste-management-and-radiation-control/waste-management', desc: 'Utah\'s waste management and composting resources for residents and businesses.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'vermont': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Vermont Foodbank', url: 'https://www.vtfoodbank.org/', desc: 'Vermont\'s largest hunger-relief organization, distributing tens of millions of pounds of food to partner agencies statewide.' },
+              { name: 'Salvation Farms', url: 'https://www.salvationfarms.org/', desc: 'Rescues surplus agricultural produce from Vermont farms and distributes it to communities in need.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Vermont ANR Composting', url: 'https://dec.vermont.gov/waste-management/solid-waste/organic-materials', desc: 'Vermont\'s organics management resources and composting programs under the Universal Recycling Law.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'virginia': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Capital Area Food Bank', url: 'https://www.capitalareafoodbank.org/', desc: 'Serves the greater Washington D.C. metro area including northern Virginia counties.' },
+              { name: 'Virginia Peninsula Foodbank', url: 'https://hrfoodbank.org/', desc: 'Provides food assistance to individuals and families across the Hampton Roads and Virginia Peninsula regions.' },
+              { name: 'Blue Ridge Area Food Bank', url: 'https://brafb.org/', desc: 'Distributes food to partner agencies across 25 counties and cities in western and central Virginia.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Virginia DEQ Organics', url: 'https://www.deq.virginia.gov/our-programs/land-waste/solid-waste-recycling', desc: 'Virginia\'s composting guidance, certified facility directory, and organics recycling resources.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'washington': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Lifeline', url: 'https://foodlifeline.org/', desc: 'Distributes hundreds of millions of pounds of food annually to partner agencies across western Washington.' },
+              { name: 'Northwest Harvest', url: 'https://northwestharvest.org/', desc: 'Washington\'s statewide hunger response agency, distributing food to partner agencies in every county.' },
+              { name: 'Second Harvest (Eastern WA)', url: 'https://2-harvest.org/', desc: 'Provides food to partner agencies across eastern Washington and northern Idaho.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Seattle Food Scraps Program', url: 'https://www.seattle.gov/utilities/your-services/collection-and-disposal/food-and-yard-waste', desc: 'Seattle\'s mandatory food and yard waste composting collection program for residents and businesses.' },
+              { name: 'King County Composting', url: 'https://kingcounty.gov/services/environment/wastewater/compost.aspx', desc: 'King County\'s residential and commercial food scrap composting resources and drop-off programs.' },
+              { name: 'WA Ecology Organics', url: 'https://ecology.wa.gov/Waste-Toxics/Reducing-recycling-waste/Organic-materials', desc: 'Washington State\'s organics recycling resources, composting regulations, and food waste reduction guidance.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'west virginia': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Facing Hunger Foodbank', url: 'https://www.facinghunger.org/', desc: 'Provides food assistance to families across 17 counties in southern and western West Virginia.' },
+              { name: 'Mountaineer Food Bank', url: 'https://mountaineerfoodbank.org/', desc: 'Distributes food to partner agencies across 48 counties in West Virginia.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'WVDEP Solid Waste', url: 'https://dep.wv.gov/wr/lrm/solidwaste/Pages/default.aspx', desc: 'West Virginia\'s solid waste management and composting resources for residents and communities.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'wisconsin': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Feeding America Eastern Wisconsin', url: 'https://www.feedingamericawi.org/', desc: 'Distributes food to partner agencies across 16 counties in eastern Wisconsin, including the Milwaukee metro area.' },
+              { name: 'Second Harvest Foodbank of Southern WI', url: 'https://www.secondharvestmadison.org/', desc: 'Distributes food to partner agencies across 16 counties in southern Wisconsin including the greater Madison area.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'WI DNR Organics', url: 'https://dnr.wisconsin.gov/topic/Organics', desc: 'Wisconsin\'s organics recycling resources, composting facility finder, and food waste reduction programs.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      },
+      'wyoming': {
+        categories: [
+          {
+            title: 'Food Rescue & Donation',
+            items: [
+              { name: 'Food Bank of Wyoming', url: 'https://wyomingfoodbank.org/', desc: 'The only food bank in Wyoming, distributing food to partner agencies and programs across the state.' },
+              findFoodBank,
+            ]
+          },
+          {
+            title: 'Composting Programs',
+            items: [
+              { name: 'Wyoming DEQ Organics', url: 'https://deq.wyoming.gov/solid-and-hazardous-waste/', desc: 'Wyoming\'s solid waste and organics resources, including composting guidance for residents and businesses.' },
+              shareWaste,
+              earth911,
+            ]
+          },
+          {
+            title: 'Community Fridges',
+            items: [ mutualAidHub, freedge, littleFreePantry ]
+          }
+        ]
+      }
+    };
+
+    function getCategoriesForState(key) {
+      const data = stateData[key];
+      const stateCategories = data ? data.categories : [];
+      return [...stateCategories, nationalAppsCategory, nationalLearnCategory];
+    }
+
+    function toTitleCase(str) {
+      return str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+
+    const producePngs = [
+      'Avocado.png','Beet.png','Cabbage.png','Carrot.png','Corn.png',
+      'KAle.png','Pepper.png','Potato.png','Raspberry-01.png','Strawberry.png',
+      'Tomato.png','apple.png','banana.png','eggplant.png','pumpkin.png'
+    ];
+
+    let lastProduce = null;
+    function randomProduce() {
+      const pool = producePngs.filter(p => p !== lastProduce);
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      lastProduce = pick;
+      return pick;
+    }
+
+    function renderItem(item) {
+      const png = randomProduce();
+      return `<div style="display: flex; align-items: center; padding: 2vh 0; border-bottom: 2px solid #49190F;">
+        <div style="flex: 0 0 40vw; display: flex; align-items: center; gap: 0.6vw;">
+          <img src="${png}" alt="" style="width: 1.8vw; height: auto; flex-shrink: 0;">
+          <a href="${item.url}" target="_blank" style="font-family: 'Platform', sans-serif; font-weight: 500; font-size: 1.56vw; color: #49190F; white-space: nowrap; text-decoration: none;" class="list-link">${item.name}</a>
+        </div>
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 1.04vw; color: #49190F; line-height: 1.5; width: 34.91vw;">${item.desc}</span>
+      </div>`;
+    }
+
+    function renderCategory(cat, first) {
+      const margin = first ? '' : 'margin-top: 7vw;';
+      return `<div style="${margin}">
+        <p style="font-family: 'Platform', sans-serif; font-weight: 500; font-size: 2.78vw; color: #49190F; margin: 0 0 3vh 0; line-height: 1.1;">${cat.title}</p>
+        ${cat.items.map(renderItem).join('')}
+      </div>`;
+    }
+
+    function loadState(raw) {
+      if (!raw) return;
+      const key = raw.toLowerCase().trim();
+      const display = toTitleCase(raw.trim());
+      const upper = raw.trim().toUpperCase();
+
+      document.getElementById('state-input').textContent = upper;
+
+      const categories = getCategoriesForState(key);
+      document.getElementById('state-description').textContent =
+        `Resources in ${display} that help you and your family reduce food waste, find affordable food options, and access sustainably sourced products.`;
+      document.getElementById('resources-list').innerHTML =
+        categories.map((cat, i) => renderCategory(cat, i === 0)).join('');
+    }
+
+    // State name → FIPS code mapping
+    const stateToFips = {
+      'alabama':'01','alaska':'02','arizona':'04','arkansas':'05','california':'06',
+      'colorado':'08','connecticut':'09','delaware':'10','florida':'12','georgia':'13',
+      'hawaii':'15','idaho':'16','illinois':'17','indiana':'18','iowa':'19','kansas':'20',
+      'kentucky':'21','louisiana':'22','maine':'23','maryland':'24','massachusetts':'25',
+      'michigan':'26','minnesota':'27','mississippi':'28','missouri':'29','montana':'30',
+      'nebraska':'31','nevada':'32','new hampshire':'33','new jersey':'34','new mexico':'35',
+      'new york':'36','north carolina':'37','north dakota':'38','ohio':'39','oklahoma':'40',
+      'oregon':'41','pennsylvania':'42','rhode island':'44','south carolina':'45',
+      'south dakota':'46','tennessee':'47','texas':'48','utah':'49','vermont':'50',
+      'virginia':'51','washington':'53','west virginia':'54','wisconsin':'55','wyoming':'56'
+    };
+
+    let mapReady = false;
+    let pendingState = 'arizona';
+
+    function highlightState(key) {
+      if (!mapReady) { pendingState = key; return; }
+      const fips = stateToFips[key];
+      document.querySelectorAll('#us-map path.state').forEach(p => {
+        p.style.fill = String(p.dataset.fips) === fips ? '#246C36' : '#c8dbc4';
+      });
+    }
+
+    // Patch loadState to also update the map
+    const _origLoad = loadState;
+    loadState = function(raw) {
+      _origLoad(raw);
+      highlightState(raw.toLowerCase().trim());
+    };
+
+    // Load D3 map after page load
+    window.addEventListener('load', () => {
+      const d3Script = document.createElement('script');
+      d3Script.src = 'https://d3js.org/d3.v7.min.js';
+      d3Script.onload = () => {
+        const topoScript = document.createElement('script');
+        topoScript.src = 'https://cdn.jsdelivr.net/npm/topojson@3/dist/topojson.min.js';
+        topoScript.onload = () => {
+          const mapDiv = document.getElementById('us-map');
+          const w = mapDiv.clientWidth || mapDiv.offsetWidth || 600;
+          const h = w * 0.62;
+
+          const svg = d3.select('#us-map').append('svg')
+            .attr('width', '100%')
+            .attr('viewBox', `0 0 ${w} ${h}`);
+
+          const projection = d3.geoAlbersUsa().fitSize([w, h], { type: 'Sphere' });
+          const path = d3.geoPath().projection(projection);
+
+          fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+            .then(r => r.json())
+            .then(us => {
+              const features = topojson.feature(us, us.objects.states).features;
+              projection.fitSize([w, h], topojson.feature(us, us.objects.states));
+
+              svg.selectAll('path.state')
+                .data(features)
+                .enter().append('path')
+                .attr('class', 'state')
+                .attr('d', path)
+                .attr('data-fips', d => String(d.id).padStart(2, '0'))
+                .style('fill', '#c8dbc4')
+                .style('stroke', '#fff')
+                .style('stroke-width', '0.8');
+
+              mapReady = true;
+              highlightState(pendingState);
+            });
+        };
+        document.head.appendChild(topoScript);
+      };
+      document.head.appendChild(d3Script);
+    });
+
+    loadState('Arizona');
+  </script>
+</body>
+</html>

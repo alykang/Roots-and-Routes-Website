@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Kids – Roots and Routes</title>
+  <style>
+    @font-face {
+      font-family: 'Outfit';
+      src: url('Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Hairline.woff2') format('woff2');
+      font-weight: 100;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Light.woff2') format('woff2');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Regular.woff2') format('woff2');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Medium.woff2') format('woff2');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Platform';
+      src: url('Platform/Platform-Bold.woff2') format('woff2');
+      font-weight: 700;
+    }
+
+    body {
+      background-color: #FBFFF8;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #246C36;
+      padding: 1.18vw 5.21vw;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    header img {
+      width: 6.25vw;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      gap: 0.83vw;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1.36vw;
+      padding: 0.56vw 1.11vw;
+      display: flex;
+      align-items: center;
+      gap: 0.42vw;
+      transition: font-weight 0.2s;
+    }
+
+    .nav-tomato {
+      height: 1.2em;
+      width: auto;
+      display: none;
+    }
+
+    nav a:hover .nav-tomato {
+      display: block;
+    }
+
+    nav a:hover {
+      font-weight: 500;
+    }
+
+    main {
+      min-height: 100vh;
+      box-sizing: border-box;
+      padding: calc(10vh + 2.08vw) 10vw;
+      position: relative;
+    }
+
+    .page-title {
+      font-family: 'Platform', sans-serif;
+      font-weight: 500;
+      font-size: 6.4vw;
+      color: #49190F;
+      margin: 0 0 4vh 0;
+      line-height: 1.1;
+    }
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="White Roots&amp;Routes Logo.png" alt="Roots and Routes Logo"></a>
+    <nav>
+      <a href="our-mission.html"><img src="Tomato.png" class="nav-tomato" alt="">Our Mission</a>
+      <a href="resources.html"><img src="Tomato.png" class="nav-tomato" alt="">Resources</a>
+      <a href="for-kids.html"><img src="Tomato.png" class="nav-tomato" alt="">For Kids</a>
+    </nav>
+  </header>
+  <main>
+    <img src="Strawberry.png" alt="Strawberry" style="position: absolute; top: calc(10vh + 2.08vw); right: 10vw; width: 15vw; transform: rotate(15deg);">
+    <img src="Cabbage.png" alt="Cabbage" style="position: absolute; top: 48%; right: -3vw; width: 18vw; transform: rotate(-10deg); z-index: 0;">
+    <p class="page-title">Education Materials<br>for Kids</p>
+    <div style="display: grid; grid-template-columns: 50vw 1fr; column-gap: 2vw; row-gap: 4vh; margin-top: 5vh; margin-left: -10vw; align-items: center;">
+      <img src="Book Cover.png" alt="Book Cover" style="width: 100%; clip-path: inset(5px 15px 15px 15px); display: block;">
+      <div>
+        <p style="font-family: 'Platform', sans-serif; font-weight: 500; font-size: 50px; color: #49190F; margin: 0; line-height: 1.1;">Food Waste Rescue</p>
+        <p style="font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 1.39vw; color: #49190F; margin: 3vh 0 0 0; line-height: 1.6;">Follow Timmy and Tilly as they learn and practice how they can reduce food waste in their own home!</p>
+        <button style="background-color: #246C36; color: #FBFFF8; font-family: 'Platform', sans-serif; font-weight: 500; font-size: 1.41vw; padding: 1.52vh 3.17vw; border: none; border-radius: 999px; cursor: pointer; width: 14vw; text-align: center; margin-top: 4vh;">ORDER NOW</button>
+      </div>
+      <img src="Phone Mockup.PNG" alt="Phone Mockup" style="width: 15vw; justify-self: center;">
+      <div>
+        <p style="font-family: 'Platform', sans-serif; font-weight: 500; font-size: 50px; color: #49190F; margin: 0; line-height: 1.1;">Farm to Plate<br>Digital Experience</p>
+        <p style="font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 1.39vw; color: #49190F; margin: 3vh 0 0 0; line-height: 1.6;">Children are guided through a location-specific interactive experience where they learn how food goes from farm to table.</p>
+        <button style="background-color: #246C36; color: #FBFFF8; font-family: 'Platform', sans-serif; font-weight: 500; font-size: 1.41vw; padding: 1.52vh 3.17vw; border: none; border-radius: 999px; cursor: pointer; width: 14vw; text-align: center; margin-top: 4vh;">EXPLORE</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

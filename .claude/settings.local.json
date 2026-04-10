@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/alyssakang/Desktop/Roots and Routes Website/Road 2.png\")",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/alyssakang/Desktop/Roots and Routes Website/Road 3.png\")",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/homebrew/**)",
+      "Read(//usr/**)",
+      "Bash(python3 -c ':*)"
+    ]
+  }
+}
